@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -63,9 +65,9 @@ public class ClientPlayerEntityMixin {
 
             // Collect players if Ctrl is pressed (ignorewalls/vision)
             if (ctrlPressed) {
-                List<AbstractClientPlayerEntity> players = world.getPlayers().stream()
+                List<AbstractClientPlayerEntity> players = (List<AbstractClientPlayerEntity>) world.getPlayers().stream()
                     .filter(p -> box.contains(p.getX(), p.getY(), p.getZ()) && p != player)
-                    .collect(java.util.stream.Collectors.toList());
+                    .collect(Collectors.toList()).reversed();
                 allEntities.addAll(players);
             }
 
