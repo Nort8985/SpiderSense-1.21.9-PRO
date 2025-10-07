@@ -13,7 +13,14 @@ A Minecraft Fabric mod that enhances your awareness by highlighting hostile mobs
 - **Range Adaptive**: Detects mobs within a 16-block radius around your position
 - **Shift Override**: Hold Shift to highlight all mobs in range regardless of line of sight
 
-### How It Works
+## PRO Features
+
+### Enhanced Control
+- **Shift Override Mode**: Press and hold Left or Right Shift to temporarily highlight ALL hostile mobs and slimes in the detection range, ignoring walls and line of sight
+- **Smart Switching**: When you release Shift, the mod returns to normal vision-based highlighting for maximum performance
+- **Combined Detection**: Supports both hostile mobs (zombies, skeletons, creepers, etc.) and slimes for complete threat awareness
+
+## How It Works
 
 The mod continuously scans for MobEntities (hostile mobs and slimes) within 8 blocks of the player. When a mob has line of sight to the player (`canSee(player)` returns true), it gets highlighted:
 
