@@ -22,7 +22,7 @@ A Minecraft Fabric mod that enhances your awareness by highlighting hostile mobs
 
 ## How It Works
 
-The mod continuously scans for MobEntities (hostile mobs and slimes) within 8 blocks of the player. When a mob has line of sight to the player (`canSee(player)` returns true), it gets highlighted:
+The mod continuously scans for MobEntities (hostile mobs and slimes) within 16 blocks of the player. When a mob has line of sight to the player (`canSee(player)` returns true), it gets highlighted:
 
 - **Client Side**: White outline appears around the mob
 - **Server Side**: Mob glows with a glowing effect for 60 seconds
@@ -75,7 +75,7 @@ The built .jar will be in `build/libs/`.
 
 ### Как это работает
 
-Мод постоянно сканирует MobEntities (враждебные мобы и слизи) в радиусе 8 блоков от игрока. Когда моб имеет линию видимости к игроку (`canSee(player)` возвращает true), он выделяется:
+Мод постоянно сканирует MobEntities (враждебные мобы и слизи) в радиусе 16 блоков от игрока. Когда моб имеет линию видимости к игроку (`canSee(player)` возвращает true), он выделяется:
 
 - **Сторона клиента**: Белый контур появляется вокруг моба
 - **Сторона сервера**: Моб светится с эффектом свечения в течение 60 секунд
