@@ -4,8 +4,10 @@ import com.nort8985.spidersensepro.MonsterHighlighter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.mob.HostileEntity;
@@ -31,7 +33,7 @@ public class ClientPlayerEntityMixin {
     void highlight(CallbackInfo ci) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
         if (MonsterHighlighter.duration <= 0) {
-            MonsterHighlighter.list = new ArrayList<>();
+            MonsterHighlighter.entities = new ArrayList<>();
             MonsterHighlighter.duration = -1;
         } else MonsterHighlighter.duration--;
 
@@ -39,22 +41,37 @@ public class ClientPlayerEntityMixin {
         if (world != null && client.interactionManager.getCurrentGameMode() == GameMode.SURVIVAL) {
             var pos = new Vec3d(player.getX(), player.getY(), player.getZ());
             var box = new Box(pos.getX() - 16, pos.getY() - 8, pos.getZ() - 16, pos.getX() + 16, pos.getY() + 8, pos.getZ() + 16);
-            List<MobEntity> entities;
+            List<Entity> allEntities = new ArrayList<>();
 
             boolean shiftPressed = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS ||
                                    GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_SHIFT) == GLFW.GLFW_PRESS;
 
-            MonsterHighlighter.shiftMode = shiftPressed;
+            boolean ctrlPressed = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS ||
+                                  GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
 
+            MonsterHighlighter.shiftMode = shiftPressed;
+            MonsterHighlighter.ctrlMode = ctrlPressed;
+
+            // Collect mobs for monster highlighting
+            List<MobEntity> mobs;
             if (shiftPressed) {
-                entities = world.getEntitiesByClass(MobEntity.class, box, e -> e instanceof HostileEntity || e instanceof SlimeEntity);
+                mobs = world.getEntitiesByClass(MobEntity.class, box, e -> e instanceof HostileEntity || e instanceof SlimeEntity);
             } else {
-                entities = world.getEntitiesByClass(MobEntity.class, box, e -> (e instanceof HostileEntity && ((HostileEntity) e).canSee(player)) || (e instanceof SlimeEntity && e.canSee(player)));
+                mobs = world.getEntitiesByClass(MobEntity.class, box, e -> (e instanceof HostileEntity && ((HostileEntity) e).canSee(player)) || (e instanceof SlimeEntity && e.canSee(player)));
+            }
+            allEntities.addAll(mobs);
+
+            // Collect players if Ctrl is pressed (ignorewalls/vision)
+            if (ctrlPressed) {
+                List<AbstractClientPlayerEntity> players = world.getPlayers().stream()
+                    .filter(p -> box.contains(p.getX(), p.getY(), p.getZ()) && p != player)
+                    .collect(java.util.stream.Collectors.toList());
+                allEntities.addAll(players);
             }
 
-            if (!entities.isEmpty()) {
+            if (!allEntities.isEmpty()) {
                 MonsterHighlighter.duration = 20;
-                MonsterHighlighter.list = entities;
+                MonsterHighlighter.entities = allEntities;
             }
         }
     }

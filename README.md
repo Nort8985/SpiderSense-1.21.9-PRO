@@ -17,8 +17,9 @@ A Minecraft Fabric mod that enhances your awareness by highlighting hostile mobs
 
 ### Enhanced Control
 - **Shift Override Mode**: Press and hold Left or Right Shift to temporarily highlight ALL hostile mobs and slimes in the detection range, ignoring walls and line of sight
-- **Smart Switching**: When you release Shift, the mod returns to normal vision-based highlighting for maximum performance
-- **Combined Detection**: Supports both hostile mobs (zombies, skeletons, creepers, etc.) and slimes for complete threat awareness
+- **Ctrl Player Override**: Press and hold Left or Right Ctrl to temporarily highlight ALL other players in the detection range, ignoring walls and line of sight
+- **Smart Switching**: When you release the keys, the mod returns to normal vision-based highlighting for maximum performance
+- **Combined Detection**: Supports both hostile mobs (zombies, skeletons, creepers, etc.) and slimes, plus player highlighting for complete awareness
 
 ## How It Works
 
@@ -70,8 +71,9 @@ The built .jar will be in `build/libs/`.
 
 ### Расширенное управление
 - **Режим замены Shift**: Нажмите и удерживайте Левый или Правый Shift, чтобы временно выделить ВСЕХ враждебных мобов и слизей в зоне обнаружения, игнорируя стены и линию видимости
-- **Умное переключение**: Когда вы отпустите Shift, мод вернется к обычному выделению на основе зрения для максимальной производительности
-- **Комбинированное обнаружение**: Поддерживает как враждебных мобов (зомби, скелеты, крипер, и т.д.), так и слизей для полной осведомленности об угрозах
+- **Режим замены Ctrl для игроков**: Нажмите и удерживайте Левый или Правый Ctrl, чтобы временно выделить ВСЕХ других игроков в зоне обнаружения, игнорируя стены и линию видимости
+- **Умное переключение**: Когда вы отпустите клавиши, мод вернется к обычному выделению на основе зрения для максимальной производительности
+- **Комбинированное обнаружение**: Поддерживает как враждебных мобов (зомби, скелеты, крипер, и т.д.), так и слизей, плюс выделение игроков для полной осведомленности
 
 ### Как это работает
 
