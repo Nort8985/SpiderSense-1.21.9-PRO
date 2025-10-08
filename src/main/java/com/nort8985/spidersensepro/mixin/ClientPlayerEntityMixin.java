@@ -75,6 +75,9 @@ public class ClientPlayerEntityMixin {
                 MonsterHighlighter.duration = 20;
                 MonsterHighlighter.entities = allEntities;
             }
+
+            // Update closest mob for HUD overlay
+            MonsterHighlighter.updateClosestMob(player);
         }
     }
 }
